@@ -3,11 +3,19 @@ class Api::TagFeedController < ApplicationController
   respond_to :json
 
   def index
-    respond_with (@tagfeds = TagFeed.all)
+    @tag_feeds = TagFeed.all
+
+    respond_to do |format|
+      format.json {render :json => @tag_feeds.to_json(:include=>[:media])}
+    end
   end  
 
   def show
-    respond_with TagFeed.find(params[:id])
+      @tag_feed = TagFeed.find(params[:id])
+
+      respond_to do |format|
+      format.json {render :json => @tag_feed.to_json(:include=>[:media])}
+    end
   end
 
   def create
