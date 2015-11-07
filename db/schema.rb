@@ -11,20 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151107022610) do
+ActiveRecord::Schema.define(version: 20151107043354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "media", force: :cascade do |t|
+    t.json     "data"
+    t.string   "tag_id"
+    t.datetime "creation_date"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
   create_table "tag_feeds", force: :cascade do |t|
     t.string   "hashtag"
-    t.datetime "startDate"
-    t.datetime "endDate"
-    t.integer  "initialTagID"
-    t.integer  "latestTagID"
-    t.boolean  "isComplete"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string   "initial_tag_id"
+    t.string   "latest_tag_id"
+    t.boolean  "is_complete"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
 end

@@ -38,7 +38,7 @@ class Api::TagFeedController < ApplicationController
 
   private
     def tf_params
-        params.require(:tag_feed).permit(:hashtag, :startDate, :endDate, :initialTagID, :latestTagID, :isComplete)
+        params.require(:tag_feed).permit(:hashtag, :start_date, :end_date, :initial_tag_id, :latest_tag_id, :is_complete)
     end 
 end
 
