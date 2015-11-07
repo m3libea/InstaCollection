@@ -28,6 +28,14 @@ class Api::TagFeedController < ApplicationController
         render json: { errors: tf.errors}, status: 422
     end    
   end  
+
+  def destroy
+    tf = TagFeed.find(params[:id])
+    tf.destroy
+    head 204
+  end  
+
+
   private
     def tf_params
         params.require(:tag_feed).permit(:hashtag, :startDate, :endDate, :initialTagID, :latestTagID, :isComplete)
