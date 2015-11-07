@@ -27,10 +27,10 @@ class Api::TagFeedController < ApplicationController
     else
         render json: { errors: tf.errors}, status: 422
     end    
-
+  end  
   private
     def tf_params
-        params.permit(:hashtag, :startDate, :endDate, :initialTagID, :latestTagID, :isComplete)
-    end  
+        params.require(:tag_feed).permit(:hashtag, :startDate, :endDate, :initialTagID, :latestTagID, :isComplete)
+    end 
 end
 
