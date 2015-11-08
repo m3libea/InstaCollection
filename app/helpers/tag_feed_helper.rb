@@ -22,7 +22,6 @@ module TagFeedHelper
     def self.update_tag(tf)
         client_id = ENV["client_id"]
 
-
         tagName = tf.hashtag
 
         url = "https://api.instagram.com/v1/tags/" + tagName +"/media/recent"

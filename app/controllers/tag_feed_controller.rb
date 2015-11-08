@@ -23,11 +23,8 @@ class TagFeedController < ApplicationController
   end
 
   def create
-    @tag_feed = TagFeed.new(params.require(:tag_feed).permit(:hashtag, :start_date, :end_date), initial_tag_id: nil, latest_tag_id: nil, is_complete: false)
-    
-    if @tag_feed.save
-      TagFeedHelper::create_tag(@tag_feed)
-    end
+    @tag_feed = TagFeed.new(params.require(:tag_feed).permit(:hashtag, :start_date, :end_date))
+    TagFeedHelper::create_tag(@tag_feed)
 
     respond_to do |format|
       if @tag_feed.save        
