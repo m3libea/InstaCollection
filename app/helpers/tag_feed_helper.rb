@@ -69,28 +69,34 @@ module TagFeedHelper
             if(flag)    
                 created_time = Time.at(media["created_time"].to_i).getutc
 
-                if(created_time >= tf.start_date && created_time <= tf.end_date)
+                if(tf.start_date == nil && tf.enddate == nil)
+                    break
+                elsif(tf.end_date == nil)
+                    tf.end_date = tf.start_date
+                elsif(tf.start_date == nil)
+                    tf.start_date = tf.end_date
+                else    
 
-                    id = media["caption"]["id"] 
+                    if(created_time >= tf.start_date && created_time <= tf.end_date)
 
-                    m = Medium.exists?(:tag_id => id)
-                    if(m)
-                        med = Medium.find_by(:tag_id => id)
-                        med.update_attributes(:data => media.to_json)
-                        if(!tf.media.exists?(:tag_id => id))
-                            tf.media << med
-                        end    
-                        counter_updated+=1
-                    else
-                        new_media = Medium.create(data: media.to_json, tag_id: id, creation_date: Time.at(created_time))
-                        tf.media << new_media
-                        counter_added+=1
-                    end
-                end    
-                
-                if(created_time > tf.end_date)
-                    tf.is_complete = true
-                end            
+                        id = media["caption"]["id"] 
+
+                        m = Medium.exists?(:tag_id => id)
+                        if(m)
+                            med = Medium.find_by(:tag_id => id)
+                            med.update_attributes(:data => media.to_json) 
+                            counter_updated+=1
+                        else
+                            new_media = Medium.create(data: media.to_json, tag_id: id, creation_date: Time.at(created_time))
+                            tf.media << new_media
+                            counter_added+=1
+                        end
+                    end    
+                    
+                    if(created_time > tf.end_date)
+                        tf.is_complete = true
+                    end 
+                end           
             end
         end
 
