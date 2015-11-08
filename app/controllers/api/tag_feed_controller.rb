@@ -5,9 +5,7 @@ class Api::TagFeedController < ApplicationController
   def index
     @tag_feeds = TagFeed.all
 
-    respond_to do |format|
-      format.json {render :json => @tag_feeds.to_json(:include=>[:media])}
-    end
+    respond_with @tag_feeds
   end  
 
   def show
@@ -19,7 +17,9 @@ class Api::TagFeedController < ApplicationController
   end
 
   def create
-    tf = TagFeed.new(tf_params)
+    Rails.logger.info tf
+    tf = TagFeed.new(params.require(:tag_feed).permit(:hashtag, :start_date, :end_date), initial_tag_id: nil, latest_tag_id: nil, is_complete: false)
+    
     if tf.save
         render json: tf, status: 201, location:[:api, tf]
         #Get Media related to the tag

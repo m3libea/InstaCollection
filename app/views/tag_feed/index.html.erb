@@ -1,0 +1,46 @@
+<% provide(:title, '#Hashtags') %>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
+        <h1>Collections</h1>
+        <ul class="collection-list">
+     
+        </ul>
+
+        <script type="text/javascript">
+            (function(){
+
+                var json = $.getJSON("/tag_feed.json", function(){
+                    console.log("getting data")
+                }).done(function(data){
+                    console.log("Success");
+
+                    $.each(data, function(i, item){
+                        switch(i%4){
+                            case 0:
+                                color = "card green";
+                                break;
+                            case 1:
+                                color = "card yellow";
+                                break;
+                            case 2:
+                                color = "card blue";
+                                break;
+                            default:        
+                                color = "card red";
+                                break;
+                        }
+
+                        link = $("<a>").attr("class", "btn btn-primary pull-right").attr("href", "<%= tag_feed_index_path %>/" + item["id"] + "/edit").append("Edit");
+                        ht = $("<h2>").append("#" + item["hashtag"]);
+                        $("<li>").attr("class", color).append(link,ht).appendTo(".collection-list")
+                    });
+                }).fail(function(){
+                    console.log("Error")
+                });
+
+            })();
+
+        </script>
+    </div>
+</div>

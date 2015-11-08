@@ -1,0 +1,19 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to 'InstaCollection', root_path, class: "navbar-brand" %>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><%= link_to '<i class="glyphicon glyphicon-camera"></i> Collections'.html_safe, root_path%></li>
+        <li><%= link_to '<i class="glyphicon glyphicon-plus"></i> New Collection'.html_safe, new_tag_feed_path %></li>
+      </ul>
+    </div>
+  </div>
+</nav>

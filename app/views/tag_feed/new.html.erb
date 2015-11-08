@@ -1,2 +1,43 @@
-<h1>TagFeed#new</h1>
-<p>Find me in app/views/tag_feed/new.html.erb</p>
+<% provide(:title, 'New Hashtag') %>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12">
+
+      <div class="card blue">
+          <h2>New collection</h2>
+          <%= form_for @tag_feed, url: tag_feed_index_path do |f| %>
+            <div class="form-group">
+              <%= f.label :hashtag %>
+              <%= f.text_field :hashtag, class: "form-control", id: 'hashtag', placeholder: 'Tag name'%>
+            </div>
+            <div class="form-group">
+              <%= f.label :start_date %>
+              <div class='input-group date' id='startdate'>
+                <%= f.text_field :start_date, class: "form-control" %>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :end_date %>
+              <div class='input-group date' id='enddate'>
+                <%= f.text_field :end_date, class: "form-control" %>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </div>
+            </div>
+            <%= f.submit "Submit", class: "btn btn-default" %>
+
+            <script type="text/javascript">
+              $(function () {
+                  $('#startdate').datetimepicker();
+                  $('#enddate').datetimepicker();
+              });
+            </script>
+          <% end %>  
+      </div>
+
+    </div>
+</div>
