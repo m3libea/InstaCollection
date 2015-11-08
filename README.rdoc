@@ -1,28 +1,14 @@
-== README
+==Insta Collection
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+App uses RoR in the Backend part, and use jQuery in the Frontend part. Styling made with help of Bootstrap.
 
-Things you may want to cover:
+In order to run and try the application, yo have to:
 
-* Ruby version
+* Download or clone the repository
+* run: rake db:create
+* run: rails server
+* Go to the default port, usually http://localhost:3000
+* You will see some seed tags, used to check the application
+* Enjoy! =)
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+You should see the app working on heroku too: http://instacollection.herokuapp.com
