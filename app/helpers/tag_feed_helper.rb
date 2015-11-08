@@ -1,3 +1,4 @@
+require 'net/http'
 module TagFeedHelper
 
     #Helper method, called by controller when a post petition comes to the API
