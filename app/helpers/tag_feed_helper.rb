@@ -82,6 +82,7 @@ module TagFeedHelper
 
                         id = media["caption"]["id"] 
 
+                        #Check if Media already exist on the db and update or add
                         m = Medium.exists?(:tag_id => id)
                         if(m)
                             med = Medium.find_by(:tag_id => id)
