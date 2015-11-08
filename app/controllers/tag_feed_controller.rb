@@ -25,9 +25,12 @@ class TagFeedController < ApplicationController
   def create
     @tag_feed = TagFeed.new(params.require(:tag_feed).permit(:hashtag, :start_date, :end_date), initial_tag_id: nil, latest_tag_id: nil, is_complete: false)
     
+    if @tag_feed.save
+      TagFeedHelper::create_tag(@tag_feed)
+    end
+
     respond_to do |format|
-      if @tag_feed.save
-        TagFeedHelper::create_tag(@tag_feed)
+      if @tag_feed.save        
         format.html { redirect_to @tag_feed, notice: 'Task was successfully created.' }
         format.json { render :show, status: :created, location: @tag_feed }
       else

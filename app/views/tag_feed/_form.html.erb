@@ -8,7 +8,7 @@
   <div class="form-group">
     <%= f.label :start_date %>
     <div class='input-group date' id='startdate'>
-      <%= f.text_field :start_date, class: "form-control" %>
+      <%= f.text_field :start_date, :value=>"#{f.object.start_date.strftime("%F %I:%M %p") unless f.object.new_record?}", :"data-date-format" => "YYYY-MM-DD hh:mm A", class: "form-control" %>
       <span class="input-group-addon">
         <span class="glyphicon glyphicon-calendar"></span>
       </span>
@@ -17,7 +17,7 @@
   <div class="form-group">
     <%= f.label :end_date %>
     <div class='input-group date' id='enddate'>
-      <%= f.text_field :end_date, class: "form-control" %>
+      <%= f.text_field :end_date, :value=>"#{f.object.end_date.strftime("%F %I:%M %p") unless f.object.new_record?}", :"data-date-format" => "YYYY-MM-DD hh:mm A", class: "form-control" %>
       <span class="input-group-addon">
         <span class="glyphicon glyphicon-calendar"></span>
       </span>
