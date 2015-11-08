@@ -22,6 +22,7 @@ class Api::TagFeedController < ApplicationController
     tf = TagFeed.new(tf_params)
     if tf.save
         render json: tf, status: 201, location:[:api, tf]
+        #Get Media related to the tag
         TagFeedHelper::create_tag(tf)
     else
         render json: { errors: tf.errors}, status: 422

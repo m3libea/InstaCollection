@@ -40,6 +40,10 @@ module TagFeedHelper
 
     #Helper method to process a json given the Tag Feed an json
     def self.process_json(tf, json)
+        puts "Adding new content.."
+        counter_added = 0
+        counter_updated = 0
+
         json["data"].each do |media|
 
             flag = true
@@ -63,7 +67,7 @@ module TagFeedHelper
                 end
             end
 
-            if(flag)
+            if(flag)    
                 created_time = Time.at(media["created_time"].to_i).getutc
 
                 if(created_time >= tf.start_date && created_time <= tf.end_date)
@@ -77,16 +81,18 @@ module TagFeedHelper
                         if(!tf.media.exists?(:tag_id => id))
                             tf.media << med
                         end    
+                        counter_updated+=1
                     else
                         new_media = Medium.create(data: media.to_json, tag_id: id, creation_date: Time.at(created_time))
-                        tf.media << new_media 
+                        tf.media << new_media
+                        counter_added+=1
                     end
                 end    
-            end 
-            
-            if(created_time > tf.end_date)
-                tf.is_complete = true
-            end            
+                
+                if(created_time > tf.end_date)
+                    tf.is_complete = true
+                end            
+            end
         end
 
         if(tf.media.count != 0)
@@ -94,6 +100,7 @@ module TagFeedHelper
             tf.latest_tag_id = tf.media.last.tag_id
         end
         tf.save
+        puts "Created: " + counter_added.to_s + " Updated: " + counter_updated.to_s    
     end
  
 end
