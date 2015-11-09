@@ -32,11 +32,11 @@
                         }
 
                         //Posible improvement, Edit button
-                        /**link = $("<a>").attr("class", "btn btn-primary pull-right").attr("href", "<%= tag_feed_index_path %>/" + item["id"] + "/edit").append("Edit");**/
+                        link = $("<a>").attr("class", "btn btn-primary pull-right").attr("href", "<%= tag_feed_index_path %>/" + item["id"] + "/edit").append("Edit");
 
                        
                         ht_link = $("<a>").attr("href", "<%= tag_feed_index_path %>/" +item["id"]).append("<h2>#"+ item["hashtag"]+"</h2>");
-                        $("<li>").attr("class", color).append(ht_link).appendTo(".collection-list")
+                        $("<li>").attr("class", color).append(link, ht_link).appendTo(".collection-list")
                     });
                 }).fail(function(){
                     console.log("Error")

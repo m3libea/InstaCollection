@@ -4,5 +4,5 @@ Rails.application.routes.draw do
 
   root 'tag_feed#index'
 
-  patch 'tag_feed/:id' => 'tag_feed#update'
+  post "/tag_feeds", to: "tag_feed#create"
 end

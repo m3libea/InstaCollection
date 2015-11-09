@@ -44,11 +44,15 @@ class TagFeedController < ApplicationController
   def update
     @tag_feed = TagFeed.find(params[:id])
 
-    if @tag_feed.update(tf_params)
-        render json: @tag_feed, status: 201, location:[:api, @tag_feed]
-    else
-        render json: { errors: @tag_feed.errors}, status: 422
-    end    
+    respond_to do |format|
+      if @tag_feed.save        
+        format.html { redirect_to @tag_feed, notice: 'Task was successfully created.' }
+        format.json { render :show, status: :created, location: @tag_feed }
+      else
+        format.html { render :new }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
+    end 
   end  
 
   def destroy

@@ -1,4 +1,4 @@
-<%= form_for @tag_feed, url: tag_feed_index_path do |f| %>
+<%= form_for @tag_feed do |f| %>
   <% if @tag_feed.new_record? %>
     <div class="form-group">
       <%= f.label :hashtag %>
