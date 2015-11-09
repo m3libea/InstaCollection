@@ -5,4 +5,5 @@ require File.expand_path('../application', __FILE__)
 Rails.application.initialize!
 
 ENV["client_id"] = "206d66c30526438c944aa8fc88154913"
+ENV["max_tag_requests"] = "20"
 

@@ -1,41 +1,59 @@
 require 'net/http'
 module TagFeedHelper
 
+    @api_url_base = "https://api.instagram.com/v1/tags/"
+    @max_requests = ENV["max_tag_requests"].to_i
+
+    def self.api_call(tag_name, params)
+        puts "[API] tag[" + tag_name + "] call with " + params.to_s
+
+        url = URI(@api_url_base + tag_name +"/media/recent")
+        url.query = URI.encode_www_form(params)
+
+        return Net::HTTP.get_response(url)
+    end
+
     #Helper method, called by controller when a post petition comes to the API
     def self.create_tag(tf)
-        client_id = ENV["client_id"]
-
-        tagName = tf.hashtag
-
-        url = "https://api.instagram.com/v1/tags/" + tagName +"/media/recent"
-        uri = URI(url)
-        params = {:client_id => client_id}
-        uri.query = URI.encode_www_form(params)
-
-        res = Net::HTTP.get_response(uri)
+        res = api_call(tf.hashtag, {:client_id => ENV["client_id"]});
 
         json = JSON.parse(res.body)
 
-        process_json(tf,json)    
+        process_json(tf,json)
+
+        tf.initial_tag_id = json["pagination"]["next_max_tag_id"]
+        tf.latest_tag_id = json["pagination"]["min_tag_id"]
+
+        tf.save
     end
 
     #Helper method, called by scheduler on Heroku to update the tag_feed
     def self.update_tag(tf)
-        client_id = ENV["client_id"]
+        puts "[Update Tag] Starting tag [" + tf.hashtag + "] update"
+        request_count = 0
+        min_tag_id = 0
+        next_max_tag_id = nil
+        
+        loop do 
+            puts "[Update Tag] tag [" + tf.hashtag + "] request " + request_count.to_s
 
-        tagName = tf.hashtag
+            res = api_call(tf.hashtag, {:client_id => ENV["client_id"], :max_tag_id => next_max_tag_id})
+            request_count += 1
+            json = JSON.parse(res.body)
+            
+            min_tag_id = [json["pagination"]["min_tag_id"].to_i, min_tag_id.to_i].max()
+            next_max_tag_id = json["pagination"]["next_max_tag_id"].to_i
+            
+            process_json(tf,json)            
+            
+            break if (tf.is_complete || 
+                tf.latest_tag_id.to_i > next_max_tag_id || 
+                request_count > @max_requests)            
+        end
 
-        url = "https://api.instagram.com/v1/tags/" + tagName +"/media/recent"
+        tf.latest_tag_id = min_tag_id
 
-        uri = URI(url)
-        params = {:client_id => client_id, :max_tag_id => tf.latest_tag_id}
-        uri.query = URI.encode_www_form(params)
-
-        res = Net::HTTP.get_response(uri)
-
-        json = JSON.parse(res.body)
-
-        process_json(tf,json)        
+        tf.save
     end
 
     #Helper method to process a json given the Tag Feed an json
@@ -102,10 +120,6 @@ module TagFeedHelper
             end
         end
 
-        if(tf.media.count != 0)
-            tf.initial_tag_id = tf.media.first.tag_id
-            tf.latest_tag_id = tf.media.last.tag_id
-        end
         tf.save
         puts "Created: " + counter_added.to_s + " Updated: " + counter_updated.to_s    
     end
