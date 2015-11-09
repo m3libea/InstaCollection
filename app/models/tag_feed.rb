@@ -1,10 +1,10 @@
 class TagFeed < ActiveRecord::Base
+    after_initialize :default_values
+
     has_many :tag_media
     has_many :media, through: :tag_media, dependent: :destroy
 
     def default_values
-        self.initial_tag_id ||= nil
-        self.latest_tag_id ||= nil
         self.is_complete ||= false
     end
     def parse_date

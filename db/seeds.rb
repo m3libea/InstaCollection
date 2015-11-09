@@ -156,3 +156,6 @@ tf.media << media2
 
 tf2 = TagFeed.create(hashtag: "casanova", start_date: Time.at(1446922755), end_date: Time.at(1446922755), initial_tag_id: "1113191214587994748", latest_tag_id: "1113191214587994748", is_complete: true)
 tf2.media << media2
+
+tf.save
+tf2.save
