@@ -19,6 +19,7 @@ create data base (Postgres)
 6. <b> run: rails server </b>
 7. <b> Go to the default port</b>, usually http://localhost:3000
 You will see some seed tags, used to check the application
+
 Enjoy! =)
 
 App working on heroku: http://instacollection.herokuapp.com/
