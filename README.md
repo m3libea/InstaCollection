@@ -15,8 +15,9 @@ To update all the gems needed to the project
 3. <b>run: rake db:create </b>
 create data base (Postgres)
 4. <b> run: rake db:migrate </b>
-5. <b> run: rails server </b>
-6. <b> Go to the default port</b>, usually http://localhost:3000
+5. <b>run: rake db:seed</b>
+6. <b> run: rails server </b>
+7. <b> Go to the default port</b>, usually http://localhost:3000
 You will see some seed tags, used to check the application
 Enjoy! =)
 
