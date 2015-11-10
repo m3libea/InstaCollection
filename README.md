@@ -1,4 +1,8 @@
-==Insta Collection
+Insta Collection
+================
+
+![instaapp](https://cloud.githubusercontent.com/assets/3776200/11020795/9280a9dc-85e0-11e5-9619-ce0a3d244a06.png)
+
 
 App uses RoR in the Backend part, and use jQuery in the Frontend part. Styling made with help of Bootstrap.
 
