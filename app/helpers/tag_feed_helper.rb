@@ -96,7 +96,7 @@ module TagFeedHelper
                     tf.start_date = tf.end_date
                 else    
 
-                    if(created_time >= tf.start_date && created_time <= tf.end_date)
+                    if(created_time >= tf.start_date || created_time <= tf.end_date)
 
                         id = media["caption"]["id"] 
 
